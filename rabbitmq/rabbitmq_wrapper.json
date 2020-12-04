@@ -1,0 +1,9 @@
+{
+    "rmq_host":"@RMQ_HOST@",
+    "rmq_port": @RMQ_PORT@,
+    "vhost":"/",
+    "user":"guest",
+    "password":"guest",
+    "rest_port":8081,
+    "retry_times":3
+}
