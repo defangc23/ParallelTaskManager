@@ -1,20 +1,11 @@
 {
     "Worker_List": {
         "0": {
-            "OCR_0": 1
-        },
-        "1": {
-            "OCR_1": 1
-        },
-        "2": {
-            "OCR_2": 1
-        },
-        "3": {
-            "OCR_3": 1
+            "OCR_0": 0
         }
     },
     "MQ_Config": {
-        "rmq_host": "172.16.124.75",
+        "rmq_host": "172.16.124.76",
         "rmq_port": 5672,
         "vhost": "/",
         "username": "guardstrike",
@@ -23,7 +14,7 @@
         "retry_times": 3
     },
     "Redis_Config": {
-        "redis_host": "172.16.124.75",
+        "redis_host": "172.16.124.76",
         "redis_port": 6379,
         "db_index": 0,
         "retry_times": 3
