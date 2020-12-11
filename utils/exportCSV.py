@@ -15,18 +15,19 @@ redis_conn = RedisDB(config=redis_config)
 result_dict = redis_conn.get_hash(REDIS_HASHNAME)
 
 ## create csv ##
+
 headers = ['Image','GroundTruth','Prediction','MaxSimilar','TimeCost','AllResult','TaskDone']
 rows_all = []
 for key, val in result_dict.items():
     one_row = []
     one_row.append(key)
-    one_row.extend(val.split('#'))
+    one_row.extend(val.split('$'))
     rows_all.append(one_row)
 
 if result_dict:
     # result sorted by time
     sorted_by_time = sorted(rows_all, key=lambda x:x[-1])
-    with open(CSV_RESULT_PATH, 'w') as f:
+    with open(CSV_RESULT_PATH, 'w', encoding='utf-8') as f:
         f_csv = csv.writer(f)
         f_csv.writerow(headers)
         f_csv.writerows(sorted_by_time)
@@ -38,3 +39,4 @@ if result_dict:
 
 else:
     print("No result found in redis")
+

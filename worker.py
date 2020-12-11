@@ -58,7 +58,7 @@ class Worker(Process):
 
             time_done = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             str_list = [str(gtTarget), str(preTarget), str(maxSimilar), str(round(timeCost,2)), str(strAllResult), time_done]
-            val_predict = "#".join(str_list).strip()
+            val_predict = "$".join(str_list).strip()
             key_imgpath = img_path.split('/')[-1]
             name = "ocr_result"
             insert_stat = self.db.insert_hash(name, key_imgpath, val_predict)
@@ -109,7 +109,7 @@ class Worker(Process):
                     self.log.warning('Worker {} is deleted, shutting down'.format(self.tag))
                     sys.exit(0)
 
-                method, msg = self.mq.fetch_a_msg_from_queue(queue_name=self.queue_name, delete_msg=True)
+                method, msg = self.mq.fetch_a_msg_from_queue(queue_name=self.queue_name, delete_msg=False)
                 if msg:
                     self.log.info('\n\n Task fetched: {}'.format(msg))
                     ret = self.task_process(msg,
@@ -119,17 +119,17 @@ class Worker(Process):
                                             ocr_label_dict)
 
                     if ret:
-                        # self.mq.ack_msg(method)
+                        self.mq.ack_msg(method)
                         self.FLAG_taskdone += 1
                         self.log.info('[Done: {}] Task processed successfully ! \n\n'.format(self.FLAG_taskdone))
                         self.FLAG_msg = True
                     else:
                         # delete messgae
-                        self.log.error('Task processed failed ! \n\n')
+                        # self.log.error('Task processed failed ! \n\n')
 
                         ## requeue message
-                        # self.mq.reject_msg(method)
-                        # raise RuntimeError('Task processed failed !')
+                        self.mq.reject_msg(method)
+                        raise RuntimeError('Task processed failed !')
 
 
                 else:
