@@ -20,8 +20,8 @@ if __name__ == '__main__':
     LAUNCH_CONF_PATH = './launch_conf.json'
     QUEUE_NAME = 'OCR'
 
-    # FOLDER_LIST = ['0102','0103','0204','0205','0206','0307','0308','0309','0410','0411','0510','0513','0514','0615','0616','0617','0718','0719','0720','0721','0722','0723','0724']
-    FOLDER_LIST = ['0103']
+    FOLDER_LIST = ['0102','0103','0204','0205','0206','0307','0308','0309','0410','0411','0510','0513','0514','0615','0616','0617','0718','0719','0720','0721','0722','0723','0724']
+    # FOLDER_LIST = ['0103']
     for n in FOLDER_LIST:
         TASK_FOLDER = '/mnt/media/users/fangcheng/test_img/OCR-POC/OCR/{}'.format(n)
         TASK_LABEL_CSV = '/mnt/media/users/fangcheng/test_img/OCR-POC/csv/{}.csv'.format(n)
