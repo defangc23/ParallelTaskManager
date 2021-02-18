@@ -20,8 +20,9 @@ if __name__ == '__main__':
     LAUNCH_CONF_PATH = './launch_conf.json'
     QUEUE_NAME = 'OCR'
 
-    FOLDER_LIST = ['0102','0103','0204','0205','0206','0307','0308','0309','0410','0411','0510','0513','0514','0615','0616','0617','0718','0719','0720','0721','0722','0723','0724']
-    # FOLDER_LIST = ['0103']
+    # FOLDER_LIST = ['0102','0103','0204','0205','0206','0307','0308','0309','0410','0411','0510','0513','0514','0615','0616','0617','0718','0719','0720','0721','0722','0723','0724']
+    FOLDER_LIST = ['10000_imgs_parts']
+    #FOLDER_LIST = ['0102']
     for n in FOLDER_LIST:
         TASK_FOLDER = '/mnt/media/users/fangcheng/test_img/OCR-POC/OCR/{}'.format(n)
         TASK_LABEL_CSV = '/mnt/media/users/fangcheng/test_img/OCR-POC/csv/{}.csv'.format(n)
@@ -39,7 +40,8 @@ if __name__ == '__main__':
             # header = next(reader)
             # print(header)
             for row in reader:
-                complete_path_list = glob.glob(os.path.join(TASK_FOLDER, row[0])+'.*')
+                # complete_path_list = glob.glob(os.path.join(TASK_FOLDER, row[0])+'.*')
+                complete_path_list = [os.path.join(TASK_FOLDER, row[0])+'.jpg']
                 if complete_path_list:
                     complete_path = complete_path_list[0]
                     send_stat = sender.send(QUEUE_NAME, {"img_path": complete_path, "ground_truth": row[1]})
