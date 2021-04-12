@@ -35,6 +35,9 @@ class Worker(Process):
             msg_dict = json.loads(msg_str)
             img_path = msg_dict['img_path']
             gtTarget = msg_dict['ground_truth']
+            demo_mode = msg_dict['demo_mode']
+
+            assert os.path.exists(img_path) == True, "Image path {} is not exist".format(img_path)
 
             # worker inference
             timeCost_A, strAllResult_A = ocr_recognition.ocr_recognition(img_path,
@@ -57,7 +60,12 @@ class Worker(Process):
 
 
             time_done = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            str_list = [str(gtTarget), str(preTarget), str(maxSimilar), str(round(timeCost,2)), str(strAllResult), time_done]
+
+            if not demo_mode:
+                str_list = [str(gtTarget), str(preTarget), str(maxSimilar), str(round(timeCost,2)), str(strAllResult), time_done]
+            else:
+                str_list = [str(-1), str(-1), str(-1), str(round(timeCost, 2)), str(strAllResult), time_done]
+
             val_predict = "$".join(str_list).strip()
             key_imgpath = img_path.split('/')[-1]
             name = "ocr_result"
